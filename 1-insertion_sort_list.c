@@ -8,20 +8,21 @@
   */
 void swap(listint_t *b, listint_t *c)
 {
-	if (b && c)
-	{
-		listint_t *a = b->prev;
-		listint_t *d = c->next;
+	listint_t *a;
+	listint_t *d;
 
-		b->next = d;
-		b->prev = c;
-		c->prev = a;
-		c->next = b;
-		if (a)
-			a->next = c;
-		if (d)
-			d->prev = b;
-	}
+	if (!b || !c)
+		return;
+	a = b->prev;
+	d = c->next;
+	b->next = d;
+	b->prev = c;
+	c->prev = a;
+	c->next = b;
+	if (a)
+		a->next = c;
+	if (d)
+		d->prev = b;
 }
 
 /**
@@ -37,6 +38,8 @@ void insertion_sort_list(listint_t **list)
 	listint_t *left; /* traverses the list towards the left */
 	listint_t *temp;
 
+	if (!list || !(*list))
+		return;
 	right = *list;
 	while (right->next)
 	{
