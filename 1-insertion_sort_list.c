@@ -33,39 +33,35 @@ void swap(listint_t *b, listint_t *c)
   */
 void insertion_sort_list(listint_t **list)
 {
+	listint_t *right; /* traverses the list towards the right  */
+	listint_t *left; /* traverses the list towards the left */
+	listint_t *temp;
 
-	if (list && *list)
+	right = *list;
+	while (right->next)
 	{
-		listint_t *right; /* traverses the list towards the right  */
-		listint_t *left; /* traverses the list towards the left */
-		listint_t *temp;
-
-		right = *list;
-		while (right->next)
+		if (right->n > right->next->n)
 		{
-			if (right->n > right->next->n)
+			left = right->next;
+			if (!(right->prev))
+				*list = left;
+			swap(right, left);
+			print_list(*list);
+			while (left->prev)
 			{
-				left = right->next;
-				if (!(right->prev))
-					*list = left;
-				swap(right, left);
-				print_list(*list);
-				while (left->prev)
+				if (left->n < left->prev->n)
 				{
-					if (left->n < left->prev->n)
-					{
-						temp = left->prev;
-						if (!(temp->prev))
-							*list = left;
-						swap(temp, left);
-						print_list(*list);
-					}
-					else
-						break;
+					temp = left->prev;
+					if (!(temp->prev))
+						*list = left;
+					swap(temp, left);
+					print_list(*list);
 				}
+				else
+					break;
 			}
-			else
-				right = right->next;
 		}
+		else
+			right = right->next;
 	}
 }
