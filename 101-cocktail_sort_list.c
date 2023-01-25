@@ -35,16 +35,16 @@ void swap(listint_t *b, listint_t *c, listint_t **list)
 /**
   * back_and_forth - An helper function for the cocktail_sort_list function
   *
-  * @start: A pointer that indicates where to start forwardward movement
+  * @pass: A pointer that is used to traverse the doubly linked list
+  * @start: A pointer that indicates where to start forward movement
   * @end: A pointer that indicates where to start backward movement
   * @list: A pointer pointing to a pointer pointing
   * to the first element of the doubly linked list of type listint_t
+  * @swap_done: Used as a flag indicating swap or no swap
   */
-void back_and_forth(listint_t *start, listint_t *end, listint_t **list)
+void back_and_forth(listint_t *pass, listint_t *start,
+	listint_t *end, listint_t **list, int swap_done)
 {
-	listint_t *pass;
-	int swap_done;
-
 	swap_done = 1;
 	while (swap_done == 1)
 	{
@@ -56,8 +56,7 @@ void back_and_forth(listint_t *start, listint_t *end, listint_t **list)
 			{
 				swap(pass->prev, pass, list);
 				if (end == pass)
-					end = start->next;
-
+					end = end->next;
 				print_list(*list);
 				swap_done = 1;
 			}
@@ -69,34 +68,19 @@ void back_and_forth(listint_t *start, listint_t *end, listint_t **list)
 		if (swap_done == 0)
 			break;
 		swap_done = 0;
-		printf("good72\n");
-
 		pass = start;
-		printf("good75\n");
 		while (pass != end && pass->prev != end)
 		{
-			printf("good78\n");
 			if (pass->n > pass->next->n)
 			{
-				printf("good81\n");
 				swap(pass, pass->next, list);
-				printf("good83\n");
 				if (start == pass)
 					start = start->prev;
-	
 				print_list(*list);
 				swap_done = 1;
 			}
 			else
-			{
-				printf("good92 pass->n = %d\n", pass->n);
-				printf("good93 start->n = %d\n", start->n);
-				printf("good94 end->n = %d\n", end->n);
 				pass = pass->next;
-				printf("good96 pass->n = %d\n", pass->n);
-				printf("good97 start->n = %d\n", start->n);
-				printf("good98 end->n = %d\n", end->n);
-			}
 		}
 		if (pass == end)
 			end = pass->prev;
@@ -121,7 +105,6 @@ void cocktail_sort_list(listint_t **list)
 	swap_done = 0;
 	pass = *list;
 	start = pass;
-	printf("Beginning forward start->n = %d\n", start->n);
 	while (pass->next)
 	{
 		if (pass->n > pass->next->n)
@@ -138,5 +121,5 @@ void cocktail_sort_list(listint_t **list)
 	end = pass->prev;
 	if (swap_done == 0)
 		return;
-	back_and_forth(start, end, list);
+	back_and_forth(pass, start, end, list, swap_done);
 }
