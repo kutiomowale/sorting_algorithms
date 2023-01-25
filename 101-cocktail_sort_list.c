@@ -55,6 +55,9 @@ void back_and_forth(listint_t *start, listint_t *end, listint_t **list)
 			if (pass->n < pass->prev->n)
 			{
 				swap(pass->prev, pass, list);
+				if (end == pass)
+					end = start->next;
+
 				print_list(*list);
 				swap_done = 1;
 			}
@@ -77,6 +80,9 @@ void back_and_forth(listint_t *start, listint_t *end, listint_t **list)
 			if (pass->n > pass->next->n)
 			{
 				swap(pass, pass->next, list);
+				if (start == pass)
+					start = start->prev;
+	
 				print_list(*list);
 				swap_done = 1;
 			}
@@ -113,6 +119,8 @@ void cocktail_sort_list(listint_t **list)
 		if (pass->n > pass->next->n)
 		{
 			swap(pass, pass->next, list);
+			if (start == pass)
+				start = start->prev;
 			print_list(*list);
 			swap_done = 1;
 		}
