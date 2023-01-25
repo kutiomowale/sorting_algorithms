@@ -45,7 +45,6 @@ void swap(listint_t *b, listint_t *c, listint_t **list)
 void back_and_forth(listint_t *pass, listint_t *start,
 	listint_t *end, listint_t **list, int swap_done)
 {
-	swap_done = 1;
 	while (swap_done == 1)
 	{
 		swap_done = 0;
